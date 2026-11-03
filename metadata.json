@@ -1,0 +1,6 @@
+{
+  "name": "Thu Wun Thar & Aye Zon Zon Phue - Wedding Invitation",
+  "description": "Luxury digital wedding invitation and celebration showcase for Thu Wun Thar & Aye Zon Zon Phue at Holiday Inn Singapore Atrium.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

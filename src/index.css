@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-royal: 'Cinzel Decorative', 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-script: 'Pinyon Script', 'Alex Brush', 'Great Vibes', cursive;
+    --font-display: 'Playfair Display', 'Cormorant Garamond', serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: #262121;
+    background-color: #FFFDF9;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  .font-royal {
+    font-family: var(--font-royal);
+  }
+
+  .font-script {
+    font-family: var(--font-script);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Custom Luxury Gold Borders and Double Frames */
+.border-gold-double {
+  border-style: double;
+  border-width: 4px;
+}
+
+/* Paper Grain Texture Overlay */
+.paper-texture {
+  background-image: radial-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Delicate Gold Keyline */
+.gold-keyline {
+  box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.35), inset 0 0 0 5px rgba(255, 255, 255, 0.8), inset 0 0 0 6px rgba(212, 175, 55, 0.25);
+}
+
+/* Soft Stationery Shadow */
+.shadow-stationery {
+  box-shadow: 0 10px 30px -5px rgba(92, 59, 44, 0.08), 0 20px 40px -15px rgba(92, 59, 44, 0.05);
+}
+
+.shadow-stationery-blue {
+  box-shadow: 0 10px 30px -5px rgba(44, 62, 80, 0.1), 0 20px 40px -15px rgba(44, 62, 80, 0.06);
+}
+
+/* Metallic Gold Specular Sheen Animation */
+@keyframes goldSheenSlide {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.gold-sheen-text {
+  background: linear-gradient(
+    90deg,
+    #78350F 0%,
+    #B45309 25%,
+    #FBBF24 50%,
+    #B45309 75%,
+    #78350F 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: goldSheenSlide 6s linear infinite;
+}
+
+/* Background Ambient Breathing Keyframes */
+@keyframes ambientBreathe {
+  0%, 100% {
+    transform: scale(1) translate(0px, 0px);
+    opacity: 0.38;
+  }
+  50% {
+    transform: scale(1.15) translate(20px, -20px);
+    opacity: 0.68;
+  }
+}
+
+@keyframes ambientBreatheSlow {
+  0%, 100% {
+    transform: scale(1.1) translate(0px, 0px);
+    opacity: 0.48;
+  }
+  50% {
+    transform: scale(0.92) translate(-25px, 20px);
+    opacity: 0.26;
+  }
+}
+
+@keyframes pulseGoldGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes floatBob {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-breathe {
+  animation: ambientBreathe 9s ease-in-out infinite;
+}
+
+.animate-breathe-slow {
+  animation: ambientBreatheSlow 13s ease-in-out infinite;
+}
+
+.animate-gold-glow {
+  animation: pulseGoldGlow 8s ease-in-out infinite;
+}
+
+.animate-float-card {
+  animation: floatBob 6s ease-in-out infinite;
+}
+
+/* Custom scrollbar for wish list */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.5);
+}
