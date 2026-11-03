@@ -33,6 +33,6 @@ export interface WeddingSlide {
   chapter: string;
   title: string;
   quote: string;
-  location: string;
+  dedication: string;
   imageSrc?: string;
 }

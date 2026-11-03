@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Camera, MapPin, Sparkles, Maximize2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, Camera, Heart, Sparkles, Maximize2 } from 'lucide-react';
 import { ThemeMode, WeddingSlide } from '../types/wedding';
 import { WEDDING_SLIDES, THEMES } from '../utils/weddingData';
 import { BotanicalCorner } from './BotanicalAccents';
@@ -163,8 +163,8 @@ export const PhotoBannerSlideshow: React.FC<PhotoBannerSlideshowProps> = ({
             </div>
 
             <div className="flex items-center justify-center gap-1.5 text-xs text-stone-600 font-sans">
-              <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-              <span>{slide.location}</span>
+              <Heart className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+              <span>{slide.dedication}</span>
             </div>
 
             <p className="font-serif italic text-xs sm:text-sm text-stone-700 leading-relaxed px-2">
@@ -217,8 +217,8 @@ export const PhotoBannerSlideshow: React.FC<PhotoBannerSlideshowProps> = ({
             </div>
 
             <div className="flex items-center gap-1.5 text-xs font-sans text-white bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-amber-300/40 shadow-md">
-              <MapPin className="w-3 h-3 text-amber-400" />
-              <span>{slide.location}</span>
+              <Heart className="w-3 h-3 text-amber-400" />
+              <span>{slide.dedication}</span>
             </div>
           </div>
 

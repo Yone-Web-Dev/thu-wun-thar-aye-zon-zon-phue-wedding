@@ -11,7 +11,7 @@ export const WEDDING_SLIDES: WeddingSlide[] = [
     chapter: 'Chapter I',
     title: "By the Ocean's Edge",
     quote: 'Where the infinite tide meets the shore, two souls unite for a lifetime of devotion.',
-    location: 'Coastal Sanctuary',
+    dedication: 'Where our forever begins',
     imageSrc: '/assets/aistudio/hero2_449a2c99.webp'
   },
   {
@@ -20,7 +20,7 @@ export const WEDDING_SLIDES: WeddingSlide[] = [
     chapter: 'Chapter II',
     title: 'Whispers of the Meadow',
     quote: 'Amidst gentle blooms and whispering grasses, every heartbeat whispers your name.',
-    location: 'Botanical Haven',
+    dedication: 'Growing together, blooming forever',
     imageSrc: '/assets/aistudio/hero6_d5b5a828.webp'
   },
   {
@@ -29,7 +29,7 @@ export const WEDDING_SLIDES: WeddingSlide[] = [
     chapter: 'Chapter III',
     title: 'A Vow Amidst the Mist',
     quote: 'Beneath the sacred floral canopy and evergreen pines, love stands unwavering and true.',
-    location: 'Enchanted Forest Sanctuary',
+    dedication: 'A promise held through every season',
     imageSrc: '/assets/aistudio/hero13_80762a5c.webp'
   },
   {
@@ -38,7 +38,7 @@ export const WEDDING_SLIDES: WeddingSlide[] = [
     chapter: 'Chapter IV',
     title: 'Forever in Your Arms',
     quote: 'In your laughter I found home, in your embrace I found my eternal peace.',
-    location: 'Golden Sun Meadow',
+    dedication: 'In your arms, I am home',
     imageSrc: '/assets/aistudio/hero15_1732920b.webp'
   },
   {
@@ -47,7 +47,7 @@ export const WEDDING_SLIDES: WeddingSlide[] = [
     chapter: 'Chapter V',
     title: 'Walking Towards Tomorrow',
     quote: 'Hand in hand, side by side, stepping into a lifetime of endless joy and devotion.',
-    location: 'Autumnal Promenade',
+    dedication: 'Every tomorrow, hand in hand',
     imageSrc: '/assets/aistudio/hero17_d9e46e95.webp'
   }
 ];
