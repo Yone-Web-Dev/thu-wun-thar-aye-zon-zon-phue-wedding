@@ -93,7 +93,12 @@ export function subscribeToWishes(handlers: {
 export function describeWishError(error: unknown): string {
   if (error && typeof error === 'object' && 'message' in error) {
     const message = String((error as { message?: string }).message || '');
-    if (/relation .*wishes.* does not exist/i.test(message) || message.includes('42P01')) {
+    if (
+      /relation .*wishes.* does not exist/i.test(message) ||
+      /could not find the table .*wishes/i.test(message) ||
+      message.includes('42P01') ||
+      message.includes('PGRST205')
+    ) {
       return 'The wishes table was not found. Run the guestbook SQL in the Supabase SQL Editor.';
     }
     if (/row-level security|RLS|permission denied|42501/i.test(message)) {

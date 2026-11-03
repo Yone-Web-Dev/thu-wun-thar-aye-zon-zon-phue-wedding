@@ -193,11 +193,17 @@ export function validateWishInput(name: string, message: string): { isValid: boo
   if (!name || name.trim().length === 0) {
     return { isValid: false, error: 'Please enter your name.' };
   }
+  if (name.trim().length > 100) {
+    return { isValid: false, error: 'Your name must be 100 characters or fewer.' };
+  }
   if (!message || message.trim().length === 0) {
     return { isValid: false, error: 'Please write your message or blessing.' };
   }
   if (message.trim().length < 3) {
     return { isValid: false, error: 'Your message should be at least 3 characters.' };
+  }
+  if (message.trim().length > 2000) {
+    return { isValid: false, error: 'Your message must be 2000 characters or fewer.' };
   }
   return { isValid: true };
 }

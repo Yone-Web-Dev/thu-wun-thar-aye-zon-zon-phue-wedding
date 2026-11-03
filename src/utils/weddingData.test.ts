@@ -31,6 +31,18 @@ test('validateWishInput rejects short message (<3 chars)', () => {
   assert.equal(result.error, 'Your message should be at least 3 characters.');
 });
 
+test('validateWishInput rejects names over 100 characters', () => {
+  const result = validateWishInput('a'.repeat(101), 'Congratulations!');
+  assert.equal(result.isValid, false);
+  assert.equal(result.error, 'Your name must be 100 characters or fewer.');
+});
+
+test('validateWishInput rejects messages over 2000 characters', () => {
+  const result = validateWishInput('Aung San', 'a'.repeat(2001));
+  assert.equal(result.isValid, false);
+  assert.equal(result.error, 'Your message must be 2000 characters or fewer.');
+});
+
 test('validateWishInput accepts valid name and message', () => {
   const result = validateWishInput('Aung San', 'Congratulations on your special day!');
   assert.equal(result.isValid, true);

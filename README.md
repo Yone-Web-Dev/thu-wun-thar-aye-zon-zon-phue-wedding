@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Thu Wun Thar & Aye Zon Zon Phue Wedding
 
 A React and Vite wedding invitation website.
@@ -7,11 +6,12 @@ A React and Vite wedding invitation website.
 
 **Prerequisite:** Node.js
 
-1. Install dependencies: `npm ci`
+1. Install dependencies: `npm ci`.
 2. Copy `.env.example` to `.env.local` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
-3. Start the development server: `npm run dev`
+3. Run the SQL in `supabase/migrations/20261104000000_create_wishes.sql` in the Supabase SQL Editor.
+4. Start the development server: `npm run dev`.
 
-The live guestbook requires a Supabase `wishes` table with appropriate public row-level security policies and Realtime enabled. The database schema is managed in Supabase and is not included in this repository.
+The guestbook stores wishes in the Supabase project configured by those environment variables. The browser connects directly to Supabase using its public anon key; row-level security limits public access to reading and adding wishes.
 
 ## Deploy to Vercel
 
@@ -21,8 +21,4 @@ Import the GitHub repository into Vercel and use:
 - Build command: `npm run build`
 - Output directory: `dist`
 
-Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to the Vercel project's environment variables, then redeploy. The anon key is intended for client-side use; never use a Supabase service-role key in a `VITE_` variable.
-=======
-# thu-wun-thar-aye-zon-zon-phue-wedding
-A beautiful, responsive, and interactive digital wedding invitation website for our special day.
->>>>>>> bcd29d26786e23cf03f73c2bd6ebc6f16e4abfeb
+Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to the Vercel project's environment variables. They must point to the same Supabase project where you ran the SQL migration. Redeploy after changing environment variables. The anon key is intended for client-side use; never use a Supabase service-role key in a `VITE_` variable.

@@ -148,6 +148,7 @@ export const LiveWishesGuestbook: React.FC<LiveWishesGuestbookProps> = ({
                     <input
                       id="wish-author-input"
                       type="text"
+                      maxLength={100}
                       value={authorName}
                       onChange={(e) => setAuthorName(e.target.value)}
                       placeholder="Enter your name / family..."
@@ -166,6 +167,7 @@ export const LiveWishesGuestbook: React.FC<LiveWishesGuestbookProps> = ({
                   <textarea
                     id="wish-message-input"
                     rows={4}
+                    maxLength={2000}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Wishing Thu Wun Thar & Aye Zon Zon Phue a lifetime of radiant love, laughter, and happiness..."
