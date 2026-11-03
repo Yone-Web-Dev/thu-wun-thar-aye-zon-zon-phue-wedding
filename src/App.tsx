@@ -14,8 +14,7 @@ import { FloatingPetals } from './components/FloatingPetals';
 import { ThemeCursorAndGlow } from './components/ThemeCursorAndGlow';
 import { PhotoLightboxModal } from './components/PhotoLightboxModal';
 import { NavigationHeader, type NavigationDestination } from './components/NavigationHeader';
-import { isSupabaseConfigured } from './lib/supabase';
-import { describeWishError, fetchWishes, insertWish, subscribeToWishes } from './lib/wishes';
+import { describeWishError, fetchWishes, insertWish } from './lib/wishes';
 
 export default function App() {
   const [theme, setTheme] = useState<ThemeMode>('peach');
@@ -109,30 +108,30 @@ export default function App() {
   }, [pendingNavigation, currentLayer]);
 
   useEffect(() => {
-    if (!isSupabaseConfigured) return;
-
     let cancelled = false;
+    let isRefreshing = false;
 
-    fetchWishes()
-      .then((rows) => {
+    const refreshWishes = async () => {
+      if (isRefreshing) return;
+      isRefreshing = true;
+      try {
+        const rows = await fetchWishes();
         if (!cancelled) setWishes(rows);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Failed to load wishes', error);
-      });
-
-    const unsubscribe = subscribeToWishes({
-      onInsert: (wish) => {
-        setWishes((prev) => (prev.some((item) => item.id === wish.id) ? prev : [wish, ...prev]));
-      },
-      onUpdate: (wish) => {
-        setWishes((prev) => prev.map((item) => (item.id === wish.id ? wish : item)));
+      } finally {
+        isRefreshing = false;
       }
-    });
+    };
+
+    void refreshWishes();
+    const intervalId = window.setInterval(() => {
+      void refreshWishes();
+    }, 15_000);
 
     return () => {
       cancelled = true;
-      unsubscribe();
+      window.clearInterval(intervalId);
     };
   }, []);
 

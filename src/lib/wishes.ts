@@ -1,5 +1,4 @@
 import { GuestWish } from "../types/wedding";
-import { isSupabaseConfigured, supabase } from "./supabase";
 
 export interface WishRow {
   id: string;
@@ -8,13 +7,32 @@ export interface WishRow {
   created_at: string;
 }
 
-function requireClient() {
-  if (!supabase || !isSupabaseConfigured) {
-    throw new Error(
-      "Supabase is not configured. Restart the app after adding VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.",
-    );
+async function requestApi<T>(method: "GET" | "POST", body?: unknown): Promise<T> {
+  let response: Response;
+  try {
+    response = await fetch("/api/wishes", {
+      method,
+      headers: body ? { "Content-Type": "application/json" } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      signal: AbortSignal.timeout(12_000),
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === "TimeoutError") {
+      throw new Error("The guestbook server did not respond in time. Please try again.");
+    }
+    throw new Error("Could not reach the guestbook server. Check your connection and try again.");
   }
-  return supabase;
+
+  const payload = await response.json().catch(() => null);
+  if (!response.ok) {
+    const message =
+      payload && typeof payload === "object" && "error" in payload
+        ? String(payload.error)
+        : `Guestbook request failed (${response.status}).`;
+    throw new Error(message);
+  }
+
+  return payload as T;
 }
 
 export function formatWishDate(createdAt: string): string {
@@ -39,60 +57,19 @@ export function mapWishRow(row: WishRow): GuestWish {
 }
 
 export async function fetchWishes(): Promise<GuestWish[]> {
-  const client = requireClient();
-  const { data, error } = await client
-    .from("wishes")
-    .select("id, name, message, created_at")
-    .order("created_at", { ascending: false });
-
-  if (error) throw error;
-  return (data as WishRow[] | null)?.map(mapWishRow) ?? [];
+  const rows = await requestApi<WishRow[]>("GET");
+  return rows.map(mapWishRow);
 }
 
 export async function insertWish(
   name: string,
   message: string,
 ): Promise<GuestWish> {
-  const client = requireClient();
-  const { data, error } = await client
-    .from("wishes")
-    .insert({
-      name: name.trim(),
-      message: message.trim(),
-    })
-    .select("id, name, message, created_at")
-    .single();
-
-  if (error) throw error;
-  return mapWishRow(data as WishRow);
-}
-
-export function subscribeToWishes(handlers: {
-  onInsert: (wish: GuestWish) => void;
-  onUpdate: (wish: GuestWish) => void;
-}): () => void {
-  const client = requireClient();
-  const channel = client
-    .channel("live-wishes")
-    .on(
-      "postgres_changes",
-      { event: "INSERT", schema: "public", table: "wishes" },
-      (payload) => {
-        handlers.onInsert(mapWishRow(payload.new as WishRow));
-      },
-    )
-    .on(
-      "postgres_changes",
-      { event: "UPDATE", schema: "public", table: "wishes" },
-      (payload) => {
-        handlers.onUpdate(mapWishRow(payload.new as WishRow));
-      },
-    )
-    .subscribe();
-
-  return () => {
-    void client.removeChannel(channel);
-  };
+  const row = await requestApi<WishRow>("POST", {
+    name: name.trim(),
+    message: message.trim(),
+  });
+  return mapWishRow(row);
 }
 
 export function describeWishError(error: unknown): string {
@@ -102,7 +79,7 @@ export function describeWishError(error: unknown): string {
       (error instanceof DOMException && error.name === "TimeoutError") ||
       /timeout|timed out|abort/i.test(message)
     ) {
-      return "Supabase did not respond within 15 seconds. Check your connection, Vercel Supabase URL, and Supabase project status, then try again.";
+      return "The guestbook server did not respond in time. Check the Vercel function logs and Supabase project status, then try again.";
     }
     if (
       /relation .*wishes.* does not exist/i.test(message) ||
